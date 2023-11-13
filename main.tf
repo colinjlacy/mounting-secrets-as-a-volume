@@ -3,7 +3,7 @@ locals {
 }
 
 module "iam_test_service_role" {
-  source = "./service-role"
+  source = "modules/service-role"
   service_account_name = "iam-test"
   target_namespace = "default"
   oidc_string = local.oidc_string
