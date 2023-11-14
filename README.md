@@ -1,6 +1,6 @@
 # EKS + IAM + OpenTofu
 
-This repo serves as a demo to accompany a blog post that I'm writing, which goes through the mapping process for tying an EKS `ServiceAccount` to an IAM Role.  Whereas the first two sections of the blog post discuss some alternate ways to do it, and how that mapping is achieved in the AWS inner workings, this shows the recommended approach, which leverages OpenTofu to create the `ServiceAccount` and IAM Role in a repeatable, automated way.
+This repo serves as a demo to accompany [this blog post](https://colinj.hashnode.dev/mapping-an-eks-serviceaccount-to-an-aws-iam-role-using-opentofu), which goes through the mapping process for tying an EKS `ServiceAccount` to an IAM Role.  Whereas the first two sections of the blog post discuss some alternate ways to do it, and how that mapping is achieved in the AWS inner workings, this shows the recommended approach, which leverages OpenTofu to create the `ServiceAccount` and IAM Role in a repeatable, automated way.
 
 Feel free to clone, fork, copy/paste as much as you want from this repo.
 

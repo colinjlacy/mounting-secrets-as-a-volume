@@ -20,7 +20,7 @@ resource "aws_iam_role" "service_role" {
   })
 }
 
-resource "kubernetes_manifest" "spc" {
+resource "kubernetes_manifest" "service_account" {
   manifest = {
     apiVersion = "v1"
     kind       = "ServiceAccount"
