@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iam-test-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iam-test-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: iam-test-service
+        version: v1
+    spec:
+      volumes:
+        - name: iam-test-secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "iam-test-aws-secret"
+      serviceAccountName: iam-test
+      containers:
+        - image: your/container:latest
+          imagePullPolicy: IfNotPresent
+          name: your-service
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: iam-test-secrets-store
+              mountPath: "/secrets/iam"
+              readOnly: true
