@@ -1,6 +1,11 @@
-# EKS + IAM + OpenTofu
+# Mounting AWS Secrets as a Volume
 
-This repo serves as a demo to accompany [this blog post](https://colinj.hashnode.dev/mapping-an-eks-serviceaccount-to-an-aws-iam-role-using-opentofu), which goes through the mapping process for tying an EKS `ServiceAccount` to an IAM Role.  Whereas the first two sections of the blog post discuss some alternate ways to do it, and how that mapping is achieved in the AWS inner workings, this shows the recommended approach, which leverages OpenTofu to create the `ServiceAccount` and IAM Role in a repeatable, automated way.
+This repo serves as a demo to accompany [this blog post](https://colinj.hashnode.dev/mounting-aws-secrets-as-volumes-in-eks). It expands on [another repo](https://github.com/colinjlacy/eks-iam-opentofu), which showed how to attach an IAM role to a Kubernetes `ServiceAccount`.
+
+I broke apart the resource file in `/modules/service-role` so that each logical grouping of resources has its own file:
+- `aws-sm-secret.tf` creates the secret and its contents
+- `iam-role-and-policy.tf` creates the various iam-related resources
+- `kubernetes-manifests.tf` creates the `ServiceAccount` and `SecretProviderClass`
 
 Feel free to clone, fork, copy/paste as much as you want from this repo.
 

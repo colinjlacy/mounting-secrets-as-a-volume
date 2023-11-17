@@ -20,16 +20,21 @@ resource "aws_iam_role" "service_role" {
   })
 }
 
-resource "kubernetes_manifest" "service_account" {
-  manifest = {
-    apiVersion = "v1"
-    kind       = "ServiceAccount"
-    metadata = {
-      name      = var.service_account_name
-      namespace = var.target_namespace
-      annotations = {
-        "eks.amazonaws.com/role-arn": aws_iam_role.service_role.arn
-      }
-    }
-  }
+resource "aws_iam_policy" "secret_access_policy" {
+  name        = "${var.service_account_name}-access-policy"
+  description = "Access policy for the ${var.service_account_name} secret"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [{
+      "Effect" : "Allow",
+      "Action" : ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"],
+      "Resource" : [aws_secretsmanager_secret.secret.arn]
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "secret_policy_attachment" {
+  role       = aws_iam_role.service_role.name
+  policy_arn = aws_iam_policy.secret_access_policy.arn
 }
